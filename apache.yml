@@ -1,0 +1,23 @@
+---
+- name: Apache server installed
+  hosts: web
+  gather_facts: no
+  become: yes
+
+  tasks:
+
+  - name: latest Apache version installed
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Apache enabled and running
+    service:
+      name: httpd
+      enabled: yes
+      state: started
+
+  - name: copy index.html
+    copy:
+      src: ~/ansible-files/index.html
+      dest: /var/www/html/
